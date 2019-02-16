@@ -1,5 +1,8 @@
 <div class="view">
-  <input type="checkbox" class="toggle" (click)="toggleTodoComplete(todo)" [checked]="todo.complete" >
-  <label>{{todo.title}}</label>
-  <button class="destroy" (click)="removeTodo(todo)"></button>
+  <div class="input-group d-flex">
+    <input type="checkbox" id="{{'input-checkbox-' + todo.id}}" class="toggle" (click)="toggleTodoComplete(todo)" [checked]="todo.complete" >
+    <label for="{{'input-checkbox-' + todo.id}}"></label>
+    <p class="flex-grow-1 input-text">{{todo.title}}</p>
+    <button class="btn btn-sm btn-outline-danger flex-shrink-0 destroy" (click)="removeTodo(todo)">Delete</button>
+  </div>
 </div>
