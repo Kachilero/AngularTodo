@@ -1,4 +1,6 @@
-# AngularToDo
+# Angular ToDo
+Using this as a base project that follows along with [this](https://www.sitepoint.com/angular-2-tutorial) tutorial from SitePoint to demonstrate my understanding of Angular 6. As I go along and learn more about Angular I plan on adding to this repo.
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
 
