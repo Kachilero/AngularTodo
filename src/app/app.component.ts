@@ -6,7 +6,7 @@ import { TodoDataService } from './todo-data.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  providers: [TodoDataService]
+  providers: []
 })
 export class AppComponent {
   constructor(private todoDataService: TodoDataService) {}
