@@ -3,5 +3,12 @@
     border-radius: 0;
     border: none;
     border-bottom: 2px solid rgba(0,0,0,0.1);
+
+    &.completed {
+      .input-text {
+        text-decoration: line-through;
+        opacity: 0.5;
+      }
+    }
   }
 }
