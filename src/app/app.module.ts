@@ -15,7 +15,10 @@ import { ApiService } from './api.service';
 import { AppRoutingModule } from './app-routing.module';
 import { TodosComponent } from './todos/todos.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import {TodosResolver} from './todos.resolver';
+import { TodosResolver } from './todos.resolver';
+import { SessionServiceService } from './session-service.service';
+import { AuthService } from './auth.service';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import {TodosResolver} from './todos.resolver';
     TodoListItemComponent,
     TodoListFooterComponent,
     TodosComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +41,9 @@ import {TodosResolver} from './todos.resolver';
   providers: [
     TodoDataService,
     ApiService,
-    TodosResolver
+    TodosResolver,
+    SessionServiceService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

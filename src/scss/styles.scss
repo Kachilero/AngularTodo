@@ -18,6 +18,7 @@ Main Import file for all of the styling
 @import "todo-list-header.component";
 @import "todo-list-footer.component";
 @import "page-not-found.component";
+@import "_sign-in.component.scss";
 
 body {
   background-color: $gray-50;

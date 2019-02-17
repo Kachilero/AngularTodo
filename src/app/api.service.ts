@@ -22,6 +22,19 @@ export class ApiService {
     return throwError(error.message);
   }
 
+  // Sign in
+  public signIn(username: string, password: string) {
+    return this.http
+      .post(API_URL + '/sign-in', {
+        username,
+        password
+      })
+      .pipe(
+        map(response => response),
+        catchError(ApiService.handleError)
+      );
+  }
+
   // API: GET /todos
   public getAllTodos(): Observable<Todo[]> {
     return this.http
