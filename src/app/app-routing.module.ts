@@ -1,18 +1,32 @@
+/* tslint:disable */
+/**
+ * Handles the routing logic for the application
+ */
+/* tslint:enable */
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { TodosComponent } from './todos/todos.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CanActivateTodosGuard } from './can-activate-todos.guard';
 import { TodosResolver } from './todos.resolver';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'todos',
+    redirectTo: 'sign-in',
     pathMatch: 'full'
+  },
+  {
+    path: 'sign-in',
+    component: SignInComponent
   },
   {
     path: 'todos',
     component: TodosComponent,
+    canActivate: [
+      CanActivateTodosGuard
+    ],
     resolve: {
       todos: TodosResolver
     }
@@ -26,7 +40,10 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [
+    CanActivateTodosGuard,
+    TodosResolver
+  ]
 })
 
 export class AppRoutingModule {
