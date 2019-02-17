@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
-import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {environment} from '../environments/environment';
 
-import { Todo } from './todo';
+import {Todo} from './todo';
 
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import {Observable, throwError} from 'rxjs';
+import {catchError, map, retry} from 'rxjs/operators';
+import {SessionServiceService} from './session-service.service';
 
 const API_URL = environment.apiUrl;
 
@@ -14,11 +16,17 @@ const API_URL = environment.apiUrl;
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private session: SessionServiceService) { }
 
   // Error handling
   private static handleError(error: HttpErrorResponse | any) {
     console.error('ApiService::handleError', error);
+    if (error.status === 401) {
+      console.log('401');
+      return throwError(error);
+    }
     return throwError(error.message);
   }
 
@@ -37,8 +45,9 @@ export class ApiService {
 
   // API: GET /todos
   public getAllTodos(): Observable<Todo[]> {
+    const options = this.getRequestOptions();
     return this.http
-      .get(API_URL + '/todos')
+      .get(API_URL + '/todos', options)
       .pipe(
         map(response => {
           // @ts-ignore
@@ -50,10 +59,11 @@ export class ApiService {
 
   // API: GET /todos/:id
   public getTodoById(todoId: number): Observable<Todo> {
+    const options = this.getRequestOptions();
     return this.http
-      .get(API_URL + '/todos/' + todoId)
+      .get(API_URL + '/todos/' + todoId, options)
       .pipe(
-        map((response: Response) => {
+        map((response) => {
           return new Todo(response);
         }),
         catchError(ApiService.handleError)
@@ -62,10 +72,11 @@ export class ApiService {
 
   // API: POST /todos
   public createTodo(todo: Todo): Observable<Todo> {
+    const options = this.getRequestOptions();
     return this.http
-      .post(API_URL + '/todos', todo)
+      .post(API_URL + '/todos', todo, options)
       .pipe(
-        map((response: Response) =>  {
+        map((response) =>  {
           console.log('POST: ', response);
           return new Todo(response);
         }),
@@ -75,10 +86,11 @@ export class ApiService {
 
   // API: PUT /todos/:id
   public updateTodo(todo: Todo): Observable<Todo> {
+    const options = this.getRequestOptions();
     return this.http
-      .put(API_URL + '/todos/' + todo.id, todo)
+      .put(API_URL + '/todos/' + todo.id, todo, options)
       .pipe(
-        map((response: Response) => {
+        map((response) => {
           return new Todo(response);
         }),
         catchError(ApiService.handleError)
@@ -87,11 +99,22 @@ export class ApiService {
 
   // API: DELETE /todos/:id
   public deleteTodoById(todoId: number): Observable<null> {
+    const options = this.getRequestOptions();
     return this.http
-      .delete(API_URL + '/todos/' + todoId)
+      .delete(API_URL + '/todos/' + todoId, options)
       .pipe(
-        map((response: Response) => null),
+        map((response) => null),
         catchError(ApiService.handleError)
       );
+  }
+
+  // Options
+  private getRequestOptions() {
+    console.log('getRequestOptions: ', this.session.accessToken);
+    return {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.session.accessToken
+      })
+    };
   }
 }

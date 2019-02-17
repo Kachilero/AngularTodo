@@ -23,6 +23,12 @@ export class TodosComponent implements OnInit {
       .subscribe(
         (todos) => {
           this.todos = todos;
+        },
+        (error) => {
+          console.error('Error on TODO page', error);
+        },
+        () => {
+          console.log('Todos Component Complete');
         }
       );
   }

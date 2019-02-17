@@ -22,6 +22,6 @@ export class CanActivateTodosGuard implements CanActivate {
       this.router.navigate(['/sign-in']);
       return false;
     }
-    return false;
+    return true;
   }
 }

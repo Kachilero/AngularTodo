@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   public doSignIn(accessToken: string, password: string) {
-    if ((!accessToken) || (name)) {
+    if ((!accessToken) || (!name)) {
       return;
     }
     this.session.accessToken = accessToken;

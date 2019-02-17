@@ -31,7 +31,7 @@ export class SignInComponent implements OnInit {
 
   public doSignIn() {
     // Check the form values
-    if(this.frm.invalid) {
+    if (this.frm.invalid) {
       this.showInputErrors = true;
       return;
     }
@@ -52,12 +52,17 @@ export class SignInComponent implements OnInit {
             response.token,
             response.name
           );
-          this.router.navigate(['todos']);
+          // this.router.navigate(['todos']);
         },
         (error) => {
           this.isBusy = false;
           this.hasFailed = true;
-        }
+          console.error('Signing failed ', error);
+        },
+        () => {
+          console.log('Sign in Completed');
+          this.router.navigate(['todos']);
+    }
       );
   }
 }

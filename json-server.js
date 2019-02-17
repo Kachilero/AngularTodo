@@ -18,24 +18,26 @@ server.use(bodyParser.json());
 server.post('/sign-in', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  console.log('Server user name: ', username);
+  console.log('Server password: ', password);
   if(username === 'demo' && password === 'demo') {
     res.json({
-      name: 'SitePoint User',
+      name: 'demo',
       token: jwtToken
     });
-
-    res.send(422, 'Invalid username and password');
+    return;
   }
+  res.status(422).send('Invalid Username and Password');
 });
 
 // Protect other routes
 server.use((req, res, next) => {
-  if(isAuthenticated(req)) {
+  if(isAuthorized(req)) {
     console.log('Access Granted');
     next();
   } else {
     console.log('Access Denied');
-    res.sendStatus(401);
+    res.status(401).send('Unauthorized');
   }
 });
 
@@ -50,8 +52,10 @@ server.listen(3000, () => {
 // Check Auth
 function isAuthorized(req) {
   let bearer = req.get('Authorization');
-  if(bearer === 'Bearer' + jwtToken) {
+  if (bearer === 'Bearer ' + jwtToken) {
+    console.log('Is Authorized');
     return true;
   }
+  console.log('NOT Authorized: ', bearer);
   return false;
 }
