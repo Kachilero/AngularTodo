@@ -1,30 +1,36 @@
-<div class="sign-in-wrapper">
-  <form [formGroup]="frm">
-    <h1>Todos</h1>
+<section class="container">
+  <div class="sign-in-wrapper">
+    <h1 class="display-1 text-secondary app-headline">Todos</h1>
+    <form [formGroup]="frm">
 
-    <input type="text" formControlName="username" placeholder="Your Username" >
-    <div class="input-errors" *ngIf="(frm.get('username').invalid && frm.get('username').touched) || showInputErrors">
-      <div *ngIf="frm.get('username').hasError('required')">
-        Please enter your username
+      <div class="form-group">
+        <input class="form-control form-control-lg" type="text" formControlName="username" placeholder="Your Username" >
+        <div class="input-errors" *ngIf="(frm.get('username').invalid && frm.get('username').touched) || showInputErrors">
+          <div *ngIf="frm.get('username').hasError('required')">
+            <ngb-alert [dismissible]="false">Please enter your username</ngb-alert>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <input type="password" formControlName="password" placeholder="Your Password" >
-    <div class="input-errors" *ngIf="(frm.get('password').invalid && frm.get('password').touched) || showInputErrors">
-      <div *ngIf="frm.get('password').hasError('required')">
-        Please enter your password
+      <div class="form-group">
+        <input class="form-control form-control-lg" type="password" formControlName="password" placeholder="Your Password" >
+        <div class="input-errors" *ngIf="(frm.get('password').invalid && frm.get('password').touched) || showInputErrors">
+          <div *ngIf="frm.get('password').hasError('required')">
+            <ngb-alert [dismissible]="false">Please enter your password</ngb-alert>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="sign-in-error" *ngIf="hasFailed">
-      Invalid username or password
-    </div>
+      <div class="sign-in-error" *ngIf="hasFailed">
+        <ngb-alert [dismissible]="false">Invalid username or password</ngb-alert>
+      </div>
 
-    <button (click)="doSignIn()" [disabled]="isBusy">
-      <ng-template [ngIf]="!isBusy" >Sign In</ng-template>
-      <ng-template [ngIf]="isBusy">Signing in, please wai1...</ng-template>
-    </button>
+      <button class="btn btn-lg btn-block btn-primary" (click)="doSignIn()" [disabled]="isBusy">
+        <ng-template [ngIf]="!isBusy" >Sign In</ng-template>
+        <ng-template [ngIf]="isBusy">Signing in, please wai1...</ng-template>
+      </button>
 
-    <p class="tip">You can use "demo"</p>
-  </form>
-</div>
+      <small class="form-text text-muted tip">You can use "demo"</small>
+    </form>
+  </div>
+</section>

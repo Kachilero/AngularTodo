@@ -49,10 +49,11 @@ export class SignInComponent implements OnInit {
       .subscribe(
         (response) => {
           this.auth.doSignIn(
+          // @ts-ignore
             response.token,
+          // @ts-ignore
             response.name
           );
-          // this.router.navigate(['todos']);
         },
         (error) => {
           this.isBusy = false;
@@ -62,7 +63,6 @@ export class SignInComponent implements OnInit {
         () => {
           console.log('Sign in Completed');
           this.router.navigate(['todos']);
-    }
-      );
+    });
   }
 }
